@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: your-docker-registry-or-dockerhub-username/user-service
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+db:
+  host: ""
+  port: "5432"
+  name: ""
+  user: ""
+  password: ""
+
+resources: {}
