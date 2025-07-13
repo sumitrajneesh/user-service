@@ -1,19 +1,39 @@
+nameOverride: ""
+fullnameOverride: ""
+
 replicaCount: 1
 
 image:
-  repository: your-docker-registry-or-dockerhub-username/user-service
+  repository: sumitrajneesh/user-service # Your actual Docker image
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "latest" # Or a specific version
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 8080 # User service's application port
 
-db:
-  host: ""
+# Database connection details (for Kubernetes deployment)
+database:
+  host: user-service-postgresql # Replace with the actual Kubernetes Service name for your user-db PostgreSQL
   port: "5432"
-  name: ""
-  user: ""
-  password: ""
+  name: user_db # Your database name
+  user: useruser # Your database user
+  # password will be fetched from a secret, as defined in deployment.yaml
+
+# You might also want to add liveness/readiness probe paths if not already templated
+# livenessProbe:
+#   path: /api/users/health
+#   initialDelaySeconds: 30
+#   periodSeconds: 10
+# readinessProbe:
+#   path: /api/users/health
+#   initialDelaySeconds: 10
+#   periodSeconds: 5
 
 resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
